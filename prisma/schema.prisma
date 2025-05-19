@@ -8,91 +8,66 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Users {
-  id  String @id @default(uuid())
-  name String @db.VarChar(255)
-  email String @unique
-  password String
-  user_type UserType
-  phone String?
-  created_at DateTime @default(now())
-
-  landOwner landowners?
-  company companies?
-  investor investors?
-}
-
 enum UserType {
   INVESTOR
   OWNER
   COMPANY
 }
 
-model Lands {
-  id String @id @default(uuid())
-  owner landowners @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  ownerId String @unique
-  area Float
-  avaliability Boolean @default(true)
-  street String @db.VarChar(255)
-  number String @db.VarChar(255)
-  complement String @db.VarChar(255)
-  district String @db.VarChar(255)
-  city String @db.VarChar(255)
-  state String @db.VarChar(255)
-  postalCode String @db.VarChar(255)
-  country String @db.VarChar(255)
+model Users {
+  id        String    @id @default(uuid())
+  name      String    @db.VarChar(255)
+  email     String    @unique
+  password  String
+  user_type UserType
+  phone     String?
+  created_at DateTime @default(now())
 
-
-  projects Project[]
-  projectsProposal projectProposal[]
-  
+  landOwner  landowners?
+  company    companies?
+  investor   investors?
 }
 
 model landowners {
-  id String @id @default(uuid())
-  user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String @unique
-  document_id String @db.VarChar(255)
-
-  lands Lands[]
+  id           String @id @default(uuid())
+  user         Users  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String @unique
+  document_id  String @db.VarChar(255)
+  lands        Lands[]
 }
 
 model companies {
-  id String @id @default(uuid())
-  user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String @unique
-  document_id String @unique
+  id           String @id @default(uuid())
+  user         Users  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String @unique
+  document_id  String @unique
   company_name String
-
-  projects Project[]
+  projects     Project[]
 }
 
 model investors {
-  id String @id @default(uuid())
-  user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String @unique
-  document_id String
-  
-  invesiments Invesiment[]
+  id           String @id @default(uuid())
+  user         Users  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String @unique
+  document_id  String
+  invesiments  Invesiment[]
 }
 
-model Project {
-  id String @id @default(uuid())
-  landProject Lands @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  projectId String @unique
-  company companies? @relation(fields: [companiesId], references: [id], onDelete: SetNull)
-  companiesId String? @unique
-  powerKw Float
-  cost Float
-  status StatusApproval @default(pending_approval)
-  estimatedReturn Float
-  createdAt DateTime @default(now())
-  title String @db.VarChar(255)
-  description String
-  area Float
-
-  investments Invesiment[]
+model Lands {
+  id               String           @id @default(uuid())
+  owner            landowners       @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId          String
+  area             Float
+  avaliability     Boolean          @default(true)
+  street           String           @db.VarChar(255)
+  number           String           @db.VarChar(255)
+  complement       String?          @db.VarChar(255)
+  district         String           @db.VarChar(255)
+  city             String           @db.VarChar(255)
+  state            String           @db.VarChar(255)
+  postalCode       String           @db.VarChar(255)
+  country          String           @db.VarChar(255)
+  projects         Project[]
   projectsProposal projectProposal[]
 }
 
@@ -102,19 +77,61 @@ enum StatusApproval {
   completed
 }
 
+model Project {
+  id              String             @id @default(uuid())
+  landProject     Lands              @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId       String
+  company         companies?         @relation(fields: [companiesId], references: [id], onDelete: SetNull)
+  companiesId     String?
+  powerKw         Float
+  cost            Float
+  status          StatusApproval     @default(pending_approval)
+  estimatedReturn Float
+  createdAt       DateTime           @default(now())
+  title           String             @db.VarChar(255)
+  description     String
+  area            Float
+
+  investments     Invesiment[]
+  projectsProposal projectProposal[]
+}
+
+model projectProposal {
+  id                         String              @id @default(uuid())
+  projects                   Project             @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId                  String
+  lands                      Lands               @relation(fields: [landsId], references: [id], onDelete: Cascade)
+  landsId                    String
+  statusProjectProposal      statusProposal      @default(pending)
+  createdAt                  DateTime            @default(now())
+  ownerAgreeProjectProposal  OwnerAgreeProposal  @default(pending)
+}
+
+enum statusProposal {
+  pending
+  accepted
+  rejected
+}
+
+enum OwnerAgreeProposal {
+  pending
+  accepted
+  rejected
+}
+
 model Invesiment {
-  id String @id @default(uuid())
-  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  projectId String @unique
-  investor investors? @relation(fields: [investorId], references: [id], onDelete: SetNull)
-  investorId String @unique
-  valueInvested Float
-  investedDate DateTime @default(now())
-  ownerAgree OwnerAgree @default(pending)
-  compAgree CompanyAgree @default(pending)
-  title String @db.VarChar(255)
-  description String
-  status StatusInvesiment @default(pending)
+  id             String         @id @default(uuid())
+  project        Project        @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId      String
+  investor       investors?     @relation(fields: [investorId], references: [id], onDelete: SetNull)
+  investorId     String?
+  valueInvested  Float
+  investedDate   DateTime       @default(now())
+  ownerAgree     OwnerAgree     @default(pending)
+  compAgree      CompanyAgree   @default(pending)
+  title          String         @db.VarChar(255)
+  description    String
+  status         StatusInvesiment @default(pending)
 }
 
 enum OwnerAgree {
@@ -134,28 +151,3 @@ enum StatusInvesiment {
   accepted
   rejected
 }
-
-model projectProposal {
-  id String @id @default(uuid())
-  projects Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  projectId String @unique
-  lands Lands @relation(fields: [landsId], references: [id], onDelete: Cascade)
-  landsId String @unique
-  statusProjectProposal statusProposal @default(pending)
-  createdAt DateTime @default(now())
-  ownerAgreeProjectProposal OwnerAgreeProposal @default(pending)
-}
-
-enum statusProposal {
-  pending
-  accepted
-  rejected
-}
-
-enum OwnerAgreeProposal {
-  pending
-  accepted
-  rejected
-}
-
-
