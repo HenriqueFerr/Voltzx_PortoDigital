@@ -1,48 +1,8 @@
-import { Prisma } from '@prisma/client';
+import { CreateUsuarioDto } from './dto/create-usuario.dto';
 export declare class UsuariosService {
-    create(data: Prisma.UsersCreateInput): Promise<{
-        id: string;
-        name: string;
-        email: string;
-        password: string;
-        user_type: import(".prisma/client").$Enums.UserType;
-        phone: string | null;
-        created_at: Date;
-    }>;
-    findAll(): Promise<{
-        id: string;
-        name: string;
-        email: string;
-        password: string;
-        user_type: import(".prisma/client").$Enums.UserType;
-        phone: string | null;
-        created_at: Date;
-    }[]>;
-    findOne(id: string): Promise<{
-        id: string;
-        name: string;
-        email: string;
-        password: string;
-        user_type: import(".prisma/client").$Enums.UserType;
-        phone: string | null;
-        created_at: Date;
-    } | null>;
-    update(id: string, data: Prisma.UsersUpdateInput): Promise<{
-        id: string;
-        name: string;
-        email: string;
-        password: string;
-        user_type: import(".prisma/client").$Enums.UserType;
-        phone: string | null;
-        created_at: Date;
-    }>;
-    remove(id: string): Promise<{
-        id: string;
-        name: string;
-        email: string;
-        password: string;
-        user_type: import(".prisma/client").$Enums.UserType;
-        phone: string | null;
-        created_at: Date;
-    }>;
+    create(data: CreateUsuarioDto): Promise<any>;
+    findAll(): Promise<any>;
+    findOne(id: string): Promise<any>;
+    update(id: string, data: Partial<CreateUsuarioDto>): Promise<any>;
+    remove(id: string): Promise<any>;
 }

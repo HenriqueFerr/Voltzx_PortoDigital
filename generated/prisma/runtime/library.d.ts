@@ -47,7 +47,7 @@ export declare type AllModelsToStringIndex<TypeMap extends TypeMapDef, Args exte
 } : {};
 
 declare class AnyNull extends NullTypesEnumValue {
-    #private;
+    private readonly _brand_AnyNull;
 }
 
 export declare type ApplyOmit<T, OmitConfig> = Compute<{
@@ -73,7 +73,7 @@ export declare type Args_3<T, F extends Operation> = Args<T, F>;
  * Query arguments marked with this type are sanitized before being sent to the database.
  * Notice while a query argument may be `null`, `ArgType` is guaranteed to be defined.
  */
-declare type ArgType = 'Int32' | 'Int64' | 'Float' | 'Double' | 'Text' | 'Enum' | 'EnumArray' | 'Bytes' | 'Boolean' | 'Char' | 'Array' | 'Numeric' | 'Json' | 'Xml' | 'Uuid' | 'DateTime' | 'Date' | 'Time' | 'Unknown';
+declare type ArgType = 'Int32' | 'Int64' | 'Float' | 'Double' | 'Text' | 'Enum' | 'EnumArray' | 'Bytes' | 'Boolean' | 'Char' | 'Array' | 'Numeric' | 'Json' | 'Xml' | 'Uuid' | 'DateTime' | 'Date' | 'Time';
 
 /**
  * Attributes is a map from string to attribute values.
@@ -210,7 +210,7 @@ declare const ColumnTypeEnum: {
 declare type CompactedBatchResponse = {
     type: 'compacted';
     plan: object;
-    arguments: Record<string, {}>[];
+    arguments: Map<string, {}>[];
     nestedSelection: string[];
     keys: string[];
     expectNonEmpty: boolean;
@@ -384,7 +384,7 @@ declare type Datasources = {
 };
 
 declare class DbNull extends NullTypesEnumValue {
-    #private;
+    private readonly _brand_DbNull;
 }
 
 export declare const Debug: typeof debugCreate & {
@@ -1148,49 +1148,6 @@ declare type Error_2 = {
 } | {
     kind: 'InvalidIsolationLevel';
     level: string;
-} | {
-    kind: 'LengthMismatch';
-    column?: string;
-} | {
-    kind: 'UniqueConstraintViolation';
-    fields: string[];
-} | {
-    kind: 'NullConstraintViolation';
-    fields: string[];
-} | {
-    kind: 'ForeignKeyConstraintViolation';
-    constraint?: {
-        fields: string[];
-    } | {
-        index: string;
-    } | {
-        foreignKey: {};
-    };
-} | {
-    kind: 'DatabaseDoesNotExist';
-    db?: string;
-} | {
-    kind: 'DatabaseAlreadyExists';
-    db?: string;
-} | {
-    kind: 'DatabaseAccessDenied';
-    db?: string;
-} | {
-    kind: 'AuthenticationFailed';
-    user?: string;
-} | {
-    kind: 'TransactionWriteConflict';
-} | {
-    kind: 'TableDoesNotExist';
-    table?: string;
-} | {
-    kind: 'ColumnNotFound';
-    column?: string;
-} | {
-    kind: 'TooManyConnections';
-    cause: string;
-} | {
-    kind: 'SocketTimeout';
 } | {
     kind: 'postgres';
     code: string;
@@ -2021,7 +1978,7 @@ declare type JsonFieldSelection = {
 };
 
 declare class JsonNull extends NullTypesEnumValue {
-    #private;
+    private readonly _brand_JsonNull;
 }
 
 /**
@@ -2688,8 +2645,8 @@ declare interface Queryable<Query, Result> extends AdapterInfo {
 }
 
 declare type QueryCompiler = {
-    compile(request: string): string;
-    compileBatch(batchRequest: string): BatchResponse;
+    compile(request: string): Promise<string>;
+    compileBatch(batchRequest: string): Promise<BatchResponse>;
 };
 
 declare interface QueryCompilerConstructor {
