@@ -1,7 +1,7 @@
 export class CreateUsuarioDto {
-  nome!: string;
+  name!: string;
   email!: string;
-  senha!: string;
-  telefone!: string;
-  tipo!: 'INVESTIDOR' | 'PROPRIETARIO' | 'EMPRESA';
+  password!: string;
+  phone!: string;
+  user_type!: 'INVESTOR' | 'OWNER' | 'COMPANY'; 
 }

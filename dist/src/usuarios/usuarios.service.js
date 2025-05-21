@@ -12,19 +12,22 @@ const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 let UsuariosService = class UsuariosService {
     async create(data) {
-        return await prisma.usuario.create({ data });
+        return await prisma.users.create({ data });
     }
     async findAll() {
-        return await prisma.usuario.findMany();
+        return await prisma.users.findMany();
     }
     async findOne(id) {
-        return await prisma.usuario.findUnique({ where: { id } });
+        return await prisma.users.findUnique({ where: { id } });
     }
     async update(id, data) {
-        return await prisma.usuario.update({ where: { id }, data });
+        return await prisma.users.update({
+            where: { id },
+            data,
+        });
     }
     async remove(id) {
-        return await prisma.usuario.delete({ where: { id } });
+        return await prisma.users.delete({ where: { id } });
     }
 };
 exports.UsuariosService = UsuariosService;
