@@ -14,18 +14,11 @@ export declare class ProjetosService {
         area: number;
     }>;
     findAll(): Promise<({
-        company: {
-            id: string;
-            userId: string;
-            document_id: string;
-            company_name: string;
-        } | null;
         landProject: {
             number: string;
             id: string;
             area: number;
             ownerId: string;
-            avaliability: boolean;
             street: string;
             complement: string | null;
             district: string;
@@ -33,7 +26,14 @@ export declare class ProjetosService {
             state: string;
             postalCode: string;
             country: string;
+            avaliability: boolean;
         };
+        company: {
+            id: string;
+            userId: string;
+            document_id: string;
+            company_name: string;
+        } | null;
     } & {
         id: string;
         projectId: string;
@@ -48,18 +48,11 @@ export declare class ProjetosService {
         area: number;
     })[]>;
     findOne(id: string): Promise<({
-        company: {
-            id: string;
-            userId: string;
-            document_id: string;
-            company_name: string;
-        } | null;
         landProject: {
             number: string;
             id: string;
             area: number;
             ownerId: string;
-            avaliability: boolean;
             street: string;
             complement: string | null;
             district: string;
@@ -67,7 +60,14 @@ export declare class ProjetosService {
             state: string;
             postalCode: string;
             country: string;
+            avaliability: boolean;
         };
+        company: {
+            id: string;
+            userId: string;
+            document_id: string;
+            company_name: string;
+        } | null;
     } & {
         id: string;
         projectId: string;

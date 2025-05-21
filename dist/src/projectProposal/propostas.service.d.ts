@@ -14,7 +14,6 @@ export declare class PropostasService {
             id: string;
             area: number;
             ownerId: string;
-            avaliability: boolean;
             street: string;
             complement: string | null;
             district: string;
@@ -22,6 +21,7 @@ export declare class PropostasService {
             state: string;
             postalCode: string;
             country: string;
+            avaliability: boolean;
         };
         projects: {
             id: string;
@@ -50,7 +50,6 @@ export declare class PropostasService {
             id: string;
             area: number;
             ownerId: string;
-            avaliability: boolean;
             street: string;
             complement: string | null;
             district: string;
@@ -58,6 +57,7 @@ export declare class PropostasService {
             state: string;
             postalCode: string;
             country: string;
+            avaliability: boolean;
         };
         projects: {
             id: string;

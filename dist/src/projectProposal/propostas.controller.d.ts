@@ -17,7 +17,6 @@ export declare class PropostasController {
             id: string;
             area: number;
             ownerId: string;
-            avaliability: boolean;
             street: string;
             complement: string | null;
             district: string;
@@ -25,6 +24,7 @@ export declare class PropostasController {
             state: string;
             postalCode: string;
             country: string;
+            avaliability: boolean;
         };
         projects: {
             id: string;
@@ -53,7 +53,6 @@ export declare class PropostasController {
             id: string;
             area: number;
             ownerId: string;
-            avaliability: boolean;
             street: string;
             complement: string | null;
             district: string;
@@ -61,6 +60,7 @@ export declare class PropostasController {
             state: string;
             postalCode: string;
             country: string;
+            avaliability: boolean;
         };
         projects: {
             id: string;
