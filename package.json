@@ -1,6 +1,11 @@
 {
+  "scripts": {
+    "dev": "nest start --watch"
+  },
   "devDependencies": {
     "@nestjs/cli": "^11.0.6",
+    "@types/bcrypt": "^5.0.2",
+    "@types/passport-jwt": "^4.0.1",
     "prisma": "^6.6.0"
   },
   "dependencies": {
@@ -10,6 +15,7 @@
     "@nestjs/passport": "^11.0.5",
     "@nestjs/platform-express": "^11.0.19",
     "@prisma/client": "^6.8.2",
+    "bcrypt": "^6.0.0",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "passport": "^0.7.0",

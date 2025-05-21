@@ -1,34 +1,41 @@
-import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
-import { LandsService } from './lands.service';
+import { Injectable } from '@nestjs/common';
 import { CreateLandDto } from './dto/create-land.dto';
 
-@Controller('lands')
-export class LandsController {
-  constructor(private readonly landsService: LandsService) {}
+@Injectable()
+export class LandsService {
+  private lands: any[] = []; // Simulando um banco de dados em memória
 
-  @Post()
-  create(@Body() data: CreateLandDto) {
-    return this.landsService.create(data);
+  create(data: CreateLandDto) {
+    const newLand = { id: Date.now().toString(), ...data };
+    this.lands.push(newLand);
+    return newLand;
   }
 
-  @Get()
   findAll() {
-    return this.landsService.findAll();
+    return this.lands;
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.landsService.findOne(id);
+  findOne(id: string) {
+    return this.lands.find(land => land.id === id);
   }
 
-  @Put(':id')
-  update(@Param('id') id: string, @Body() data: Partial<CreateLandDto>) {
-    return this.landsService.update(id, data);
+  update(id: string, data: Partial<CreateLandDto>) {
+    const landIndex = this.lands.findIndex(land => land.id === id);
+    if (landIndex === -1) {
+      return { message: 'Terreno não encontrado' };
+    }
+    this.lands[landIndex] = { ...this.lands[landIndex], ...data };
+    return this.lands[landIndex];
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.landsService.remove(id);
+  remove(id: string) {
+    const landIndex = this.lands.findIndex(land => land.id === id);
+    if (landIndex === -1) {
+      return { message: 'Terreno não encontrado' };
+    }
+    const removed = this.lands.splice(landIndex, 1);
+    return removed[0];
   }
 }
+
 
